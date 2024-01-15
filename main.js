@@ -2,8 +2,6 @@ const container = document.getElementById('container');
 const list = document.getElementById('list-url');
 document.getElementById('button-create').addEventListener('click', shortenURL);
 const listUrl = document.getElementById('list-url');
-let links;
-let clicks;
 
 function shortenURL() {
     const url = document.getElementById('input-url').value;

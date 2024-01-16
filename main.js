@@ -1,23 +1,32 @@
 const container = document.getElementById('container');
 const list = document.getElementById('list-url');
 document.getElementById('button-create').addEventListener('click', shortenURL);
-const listUrl = document.getElementById('list-url');
+document.getElementById('button-delete').addEventListener('click', handleDeleteButton);
 
 function shortenURL() {
     const url = document.getElementById('input-url').value;
     if (checkURL(url)) {
         const li = document.createElement('li');
-        const shortUrl = 'localhost/' +   String( new Date().getTime()).slice(-5);
+        const shortUrl = 'localhost/' + String(new Date().getTime()).slice(-5);
         li.innerHTML = `<a target="_blank" href="${url}">${shortUrl}</a> - ${url} <span> - Clicks: 0</span>`;
         list.appendChild(li);
         const newLink = li.querySelector('a');
-        newLink.addEventListener('click', function(ev) {
+        newLink.addEventListener('click', function (ev) {
             countClicks(newLink);
         });
         container.innerHTML = '';
     } else {
         container.innerHTML = '<p>Please enter a valid url</p>'
-        //removeChildren();
+
+    }
+}
+
+function handleDeleteButton() {
+    const url = document.getElementById('input-url').value;
+    if (url) {
+        removeUrls(url);
+    } else {
+        removeUrls();
     }
 }
 
@@ -26,9 +35,20 @@ function checkURL(url) {
     return pattern.test(url)
 }
 
-function removeChildren() {
-    while (list.firstChild) {
-        list.removeChild(list.firstChild);
+function removeUrls(url) {
+    if (arguments.length > 0) {
+        let node = list.lastChild;
+        while (node) {
+            let prevNode = node.previousSibling;
+            if (String(node.textContent).includes(url)) {
+                list.removeChild(node);
+            }
+            node = prevNode;
+        }
+    } else {
+        while (list.firstChild) {
+            list.removeChild(list.firstChild);
+        }
     }
 }
 

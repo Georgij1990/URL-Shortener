@@ -24,7 +24,6 @@ function shortenURL() {
         container.innerHTML = '';
     } else {
         container.innerHTML = '<p>Please enter a valid url</p>'
-
     }
 }
 
